@@ -12,25 +12,11 @@ name changes daily.
 Most dmr id database files can be used to retrieve station
 information. It just needs to be named usr.bin and reside
 in the current directory. Information retieved from the
-dmr database will be displayed as below.
+dmr database will be displayed on the ssh terminal.
 
-▄▄      ▄▄    ▄▄       ▄▄▄        ▄▄▄▄     ▄▄▄▄    ▄▄    ▄▄
-██      ██   ████     █▀██      ██▀▀▀▀█   ██▀▀██   ▀██  ██▀
-▀█▄ ██ ▄█▀   ████       ██     ██        ██    ██   ██  ██
- ██ ██ ██   ██  ██      ██     ██  ▄▄▄▄  ██    ██   ██  ██
- ███▀▀███   ██████      ██     ██  ▀▀██  ██    ██    ████
- ███  ███  ▄██  ██▄  ▄▄▄██▄▄▄   ██▄▄▄██   ██▄▄██     ████
- ▀▀▀  ▀▀▀  ▀▀    ▀▀  ▀▀▀▀▀▀▀▀     ▀▀▀▀     ▀▀▀▀      ▀▀▀▀
-
-
-   ▄▄            ▄    █
-   ██    ▄ ▄▄  ▄▄█▄▄  █ ▄▄   ▄   ▄   ▄ ▄▄
-  █  █   █▀  ▀   █    █▀  █  █   █   █▀  ▀
-  █▄▄█   █       █    █   █  █   █   █
- █    █  █       ▀▄▄  █   █  ▀▄▄▀█   █
-
-13:59:00 WA1GOV,Arthur,"East Taunton",Massachusetts,"United States" TG91
-         Duration  19.6 seconds, 0% packet loss, BER: 0.0%
+The callsign and name will be displayed in large characters
+followed by a timestamp, callsign, first name, city, state,
+country and talkgroup in normal text (see example.jpg).
 
 The following requirements/prerequisites need to be done before
 starting up the program.
