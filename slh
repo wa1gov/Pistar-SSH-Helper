@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd ~
+LOG=`ls -tr /var/log/pi-star/MMDVM* | tail -1`
+./showlh $LOG
