@@ -30,18 +30,16 @@ starting up the program.
 Use SSH from the pistar dashboard or another ssh client and login
 to the Pistar hotspot.
 
-The easiest way to install this is to run the following command:
+Download the tar archive from GitHub:
     
-    git clone https://github.com/wa1gov/Pistar-SSH-Helper.git
+    wget -O psh-install.tgz https://github.com/wa1gov/Pistar-SSH-Helper/raw/master/psh-install.tgz
 
-This will create a directory called Pistar-SSH-Helper.
-In this directory look for the script:
+Extract the contents of the tar archive:
 
-    psh-install.sh
+    tar xvf psh-install.tgz
 
-Run the script as follows:
+Run this script as follows:
 
-    cd ~/Pistar-SSH-Helper
     ./psh-install.sh
 
 ----------------------------------------------------------------
