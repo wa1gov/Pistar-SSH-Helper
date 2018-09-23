@@ -1,21 +1,19 @@
 // USING ANSI COLORS
 
-static std::map<std::string, std::string> colors = {
-    { "BLACK", "\x1b[30m" },
-    { "BBLACK", "\x1b[90m" },
-    { "RED", "\x1b[31m" },
-    { "BRED", "\x1b[91m" },
-    { "GREEN", "\x1b[32m" },
-    { "BGREEN", "\x1b[92m" },
-    { "YELLOW", "\x1b[33m" },
-    { "BYELLOW", "\x1b[93m" },
-    { "BLUE", "\x1b[34m" },
-    { "BBLUE", "\x1b[94m" },
-    { "MAGENTA", "\x1b[35m" },
-    { "BMAGENTA", "\x1b[95m" },
-    { "CYAN", "\x1b[36m" },
-    { "BCYAN", "\x1b[96m" },
-    { "WHITE", "\x1b[37m" },
-    { "BWHITE", "\x1b[97m" }
-};
+static const std::string BLACK="\x1b[30m";
+static const std::string BBLACK="\x1b[90m";
+static const std::string RED="\x1b[31m";
+static const std::string BRED="\x1b[91m";
+static const std::string GREEN="\x1b[32m";
+static const std::string BGREEN="\x1b[92m";
+static const std::string YELLOW="\x1b[33m";
+static const std::string BYELLOW="\x1b[93m";
+static const std::string BLUE="\x1b[34m";
+static const std::string BBLUE="\x1b[94m";
+static const std::string MAGENTA="\x1b[35m";
+static const std::string BMAGENTA="\x1b[95m";
+static const std::string CYAN="\x1b[36m";
+static const std::string BCYAN="\x1b[96m";
+static const std::string WHITE="\x1b[37m";
+static const std::string BWHITE="\x1b[97m";
 static const std::string RESET="\x1b[0m";
