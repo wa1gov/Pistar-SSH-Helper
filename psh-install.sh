@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cd ~
 echo "Installing Pistar-SSH-Helper"
 echo "Updating Pistar, please wait..."
 
