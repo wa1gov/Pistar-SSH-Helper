@@ -39,32 +39,10 @@ In this directory look for the script:
 
     psh-install.sh
 
-Make this script executable, then run it:
+Run the script as follows:
 
     cd ~/Pistar-SSH-Helper
-    chmod +x psh-install.sh
     ./psh-install.sh
-
-The command should perform all the other commands listed
-in the next section below. If you ran psh-install.sh successfully,
-you can now skip to OPERATION and OPTIONS.
-
-----------------------------------------------------------------
-
-Make slh and showlh executable.
-
-    cd ~/Pistar-SSH-Helper
-    chmod +x slh showlh
-
-Download the database file in the pi-star home directory
-
-    wget -O usr.bin http://www.amateurradio.digital/pi-star_data.php
-
-Install figlet and toilet on the RPI hosting the hotspot.
-
-    sudo pistar-update
-    sudo apt-get install figlet
-    sudo apt-get install toilet
 
 ----------------------------------------------------------------
 OPERATION and OPTIONS
@@ -106,6 +84,6 @@ For MMDVM hotspots, the default logfile is located in
 
     MMDVM-year-month-day.log
 
-The logfile name changes automatically via Pistar at 2400 UTC.
-The program may appear to hang at 2400 UTC as a new logfile is created.
-If this condition occurs, stop and restart the program.
+A new logfile is created for the next day automatically via Pistar
+at 2400 UTC. The program may appear to hang at 2400 UTC when the new
+logfile is created. If this occurs, stop and restart the program.
