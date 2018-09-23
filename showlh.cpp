@@ -1,5 +1,5 @@
 /* 
- *  file    slh.cpp
+ *  file    showlh.cpp, slh.cpp
  *  author  WA1GOV
  *  date    9/15/2018  
  *  version 1.1.1 
@@ -17,22 +17,17 @@
  *
  */
 
-// Use "c++ -std=c++0x slh.cpp" or
-//     "g++ -std=c++0x slh.cpp" to compile
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <unistd.h>
 #include <algorithm>
-#include <map>
 #include "showlh.h"
 
 using namespace std;
-
 int firstrun=0;
 static int last_position=0;
-string DEFCOLOR;
+std::string DEFCOLOR;
 
 std::string(get_callsign(const std::string& callsign))
 {
@@ -132,8 +127,31 @@ int find_new_text(ifstream &infile) {
             // Use figlet to banner the callsign
             
             // Set callsign color
-
-            cout << colors[DEFCOLOR] << "\n";
+           
+            if( DEFCOLOR == "RED") {
+                cout << RED << "\n";
+            }
+            if( DEFCOLOR == "Bright_RED") {
+                cout << BRED << "\n";
+            }
+            if( DEFCOLOR == "BLUE") {
+                cout << BLUE << "\n";
+            }
+            if( DEFCOLOR == "Bright_BLUE") {
+                cout << BBLUE << "\n";
+            }
+            if( DEFCOLOR == "GREEN") {
+                cout << GREEN << "\n";
+            }
+            if( DEFCOLOR == "Bright_GREEN") {
+                cout << BGREEN << "\n";
+            }
+            if( DEFCOLOR == "WHITE") {
+                cout << WHITE << "\n";
+            }
+            if( DEFCOLOR == "Bright_WHITE") {
+                cout << BWHITE << "\n";
+            }
 
             std::string cmd1 = "figlet -f mono12 ";
             std::string cmd2 = strWords[11];
