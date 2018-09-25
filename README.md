@@ -46,7 +46,7 @@ Run this script as follows:
 OPERATION and OPTIONS
 
 The showlh.cfg offers the option to choose a color for the callsign
-(DEFCOLOR), divider line (DIVCOLOR) and the text (TXTCOLOR) display:
+(DEFCOLOR) and the text (TXTCOLOR) display:
 
 BLACK
 BBLACK
@@ -54,12 +54,19 @@ RED=DEFCOLOR
 BRED
 GREEN
 BGREEN
-WHITE=DIVCOLOR
 WHITE=TXTCOLOR
 BWHITE
 
-Choose the color by editing the file and appending "=DEFCOLOR", 
-"=DIVCOLOR", or "=TXTCOLOR", to the color of choice as in the example above.
+Choose the color by editing the file and appending "=DEFCOLOR" 
+or "=TXTCOLOR" to the color of choice as in the example above.
+
+The the program will display the CPU temperature on the divider
+line (see example3.jpg). The divider line color will change based
+on the CPU temperature as follows:
+
+GREEN < 50 degrees C.
+YELLOW >= 50 degrees C.
+RED >= 69 degrees C.
 
 Run slh to start the program
 

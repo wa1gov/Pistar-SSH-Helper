@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <algorithm>
 #include <map>
+#include <iomanip>
 #include "showlh.h"
 
 using namespace std;
@@ -70,8 +71,8 @@ int find_new_text(ifstream &infile) {
     infile.seekg(0,ios::end);
     int filesize = infile.tellg();
     size_t pos;
-    string line;
-    string cline;
+    float cputemp;
+    string line, cline;
     string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
     string strWords[17]; // [2] = ID, [11] = callsign, [14] = TG
     string trimtime, trimname;
@@ -95,6 +96,12 @@ int find_new_text(ifstream &infile) {
 
     for(int n=last_position; n<filesize; n++) {
 
+        std::ifstream tempin("/sys/class/thermal/thermal_zone0/temp");
+        tempin >> cputemp;
+        if (cputemp/1000 < 50) DIVCOLOR="GREEN";
+        if (cputemp/1000 >= 50) DIVCOLOR="YELLOW";
+        if (cputemp/1000 >= 69) DIVCOLOR="RED";
+
         // get the packet loss and BER for the last station
 
         infile.seekg( last_position-48,ios::beg);
@@ -106,7 +113,7 @@ int find_new_text(ifstream &infile) {
             getline(infile, line);
             if( line.find("BER") != string::npos) {
             cout << "\t Duration " << line << "\n";
-            cout << colors[DIVCOLOR] << "═══════════════════════════════════════════════════════════════════════" << RESET;
+            cout << colors[DIVCOLOR] << "═══════════════════════ CPU Temp: " << std::fixed << std::setprecision(1) << cputemp/1000 << "C/" << cputemp/1000*1.8+32 << "F ════════════════════════" << RESET;
             }
         }
 
@@ -212,7 +219,6 @@ int main(int argc, char *argv[]) {
     std::string cfgline;
     DEFCOLOR="WHITE";
     TXTCOLOR="BLUE";
-    DIVCOLOR="WHITE";
     while( std::getline(cfgin, cfgline)) {
         std::stringstream stream(cfgline);
         if( cfgline.find("DEFCOLOR") != string::npos) {
@@ -222,10 +228,6 @@ int main(int argc, char *argv[]) {
         if( cfgline.find("TXTCOLOR") != string::npos) {
             std::stringstream stream(cfgline);
             getline(stream, TXTCOLOR, '=');
-        }
-        if( cfgline.find("DIVCOLOR") != string::npos) {
-            std::stringstream stream(cfgline);
-            getline(stream, DIVCOLOR, '=');
         }
     }
     cfgin.close();
