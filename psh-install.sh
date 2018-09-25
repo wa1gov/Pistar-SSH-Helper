@@ -23,7 +23,7 @@ sudo apt-get -y install toilet > /dev/null
 echo "Done installing toilet!"
 echo
 echo "To start Pistar-SSH-Helper,type:" 
-echo "cd ~/Pistar-SSH-Helper"
+echo
 echo "./slh"
 echo
 echo "Done installing Pistar-SSH-Helper!!"
