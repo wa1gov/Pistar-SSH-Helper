@@ -45,7 +45,8 @@ Run this script as follows:
 ----------------------------------------------------------------
 OPERATION and OPTIONS
 
-The showlh.cfg offers the option to choose a color for the callsign display:
+The showlh.cfg offers the option to choose a color for the callsign
+(DEFCOLOR), divider line (DIVCOLOR) and the text (TXTCOLOR) display:
 
 BLACK
 BBLACK
@@ -53,9 +54,12 @@ RED=DEFCOLOR
 BRED
 GREEN
 BGREEN
+WHITE=DIVCOLOR
+WHITE=TXTCOLOR
+BWHITE
 
-Choose the color by editing the file and appending "=DEFCOLOR" to the 
-color of choice as in the example above.
+Choose the color by editing the file and appending "=DEFCOLOR", 
+"=DIVCOLOR", or "=TXTCOLOR", to the color of choice as in the example above.
 
 Run slh to start the program
 
