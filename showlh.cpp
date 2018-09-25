@@ -33,6 +33,8 @@ using namespace std;
 int firstrun=0;
 static int last_position=0;
 string DEFCOLOR;
+string TXTCOLOR;
+string DIVCOLOR;
 
 std::string(get_callsign(const std::string& callsign))
 {
@@ -103,7 +105,8 @@ int find_new_text(ifstream &infile) {
             infile.seekg( last_position-41,ios::beg);
             getline(infile, line);
             if( line.find("BER") != string::npos) {
-            cout << "\t Duration " << line;
+            cout << "\t Duration " << line << "\n";
+            cout << colors[DIVCOLOR] << "═══════════════════════════════════════════════════════════════════════" << RESET;
             }
         }
 
@@ -141,7 +144,7 @@ int find_new_text(ifstream &infile) {
 
             system( cmd3.c_str() );
 
-            cout << RESET << "\n"; // reset color 
+            cout << colors[TXTCOLOR] << "\n"; // text color 
 
             // Parse the database line
 
@@ -208,11 +211,21 @@ int main(int argc, char *argv[]) {
     }
     std::string cfgline;
     DEFCOLOR="WHITE";
+    TXTCOLOR="BLUE";
+    DIVCOLOR="WHITE";
     while( std::getline(cfgin, cfgline)) {
         std::stringstream stream(cfgline);
         if( cfgline.find("DEFCOLOR") != string::npos) {
             std::stringstream stream(cfgline);
             getline(stream, DEFCOLOR, '=');
+        }
+        if( cfgline.find("TXTCOLOR") != string::npos) {
+            std::stringstream stream(cfgline);
+            getline(stream, TXTCOLOR, '=');
+        }
+        if( cfgline.find("DIVCOLOR") != string::npos) {
+            std::stringstream stream(cfgline);
+            getline(stream, DIVCOLOR, '=');
         }
     }
     cfgin.close();
