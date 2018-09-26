@@ -85,7 +85,7 @@ int find_new_text(ifstream &infile) {
         last_position=0;
     }
 
-    // only do this the first time through the file
+    // only do this the first time through
 
     if( firstrun == 0 ) {
         last_position=filesize;
