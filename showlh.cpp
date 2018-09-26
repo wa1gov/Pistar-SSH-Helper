@@ -107,13 +107,12 @@ int find_new_text(ifstream &infile) {
         infile.seekg( last_position-48,ios::beg);
         getline(infile, line);
         if( line.find("RSSI") != string::npos) {
-            cout << "\t Duration " << line;
+            cout << "\t Duration " << line << "\n";
         } else {
             infile.seekg( last_position-41,ios::beg);
             getline(infile, line);
             if( line.find("BER") != string::npos) {
             cout << "\t Duration " << line << "\n";
-            cout << colors[DIVCOLOR] << "═══════════════════════ CPU Temp: " << std::fixed << std::setprecision(1) << cputemp/1000 << "C/" << cputemp/1000*1.8+32 << "F ════════════════════════" << RESET;
             }
         }
 
@@ -138,6 +137,7 @@ int find_new_text(ifstream &infile) {
             // Get the line in the database for this callsign
 
             std::string cline = get_callsign(strWords[11]);
+            cout << colors[DIVCOLOR] << "═══════════════════════ CPU Temp: " << std::fixed << std::setprecision(1) << cputemp/1000 << "C/" << cputemp/1000*1.8+32 << "F ════════════════════════" << RESET;
 
             // Use figlet to banner the callsign
             
