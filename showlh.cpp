@@ -96,12 +96,6 @@ int find_new_text(ifstream &infile) {
 
     for(int n=last_position; n<filesize; n++) {
 
-        std::ifstream tempin("/sys/class/thermal/thermal_zone0/temp");
-        tempin >> cputemp;
-        if (cputemp/1000 < 50) DIVCOLOR="GREEN";
-        if (cputemp/1000 >= 50) DIVCOLOR="YELLOW";
-        if (cputemp/1000 >= 69) DIVCOLOR="RED";
-
         // get the packet loss and BER for the last station
 
         infile.seekg( last_position-48,ios::beg);
@@ -137,7 +131,18 @@ int find_new_text(ifstream &infile) {
             // Get the line in the database for this callsign
 
             std::string cline = get_callsign(strWords[11]);
-            cout << colors[DIVCOLOR] << "═══════════════════════ CPU Temp: " << std::fixed << std::setprecision(1) << cputemp/1000 << "C/" << cputemp/1000*1.8+32 << "F ════════════════════════" << RESET;
+      
+            // Display the divider line with CPU Temp
+
+            std::ifstream tempin("/sys/class/thermal/thermal_zone0/temp");
+            tempin >> cputemp;
+            if (cputemp/1000 < 50) DIVCOLOR="GREEN";
+            if (cputemp/1000 >= 50) DIVCOLOR="YELLOW";
+            if (cputemp/1000 >= 69) DIVCOLOR="RED";
+
+            cout << colors[DIVCOLOR] << "═══════════════════════ CPU Temp: ";
+            cout << std::fixed << std::setprecision(1) << cputemp/1000 << "C/" << cputemp/1000*1.8+32;
+            cout << "F ════════════════════════" << RESET;
 
             // Use figlet to banner the callsign
             
