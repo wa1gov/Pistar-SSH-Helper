@@ -59,8 +59,8 @@ std::string(get_callsign(const std::string& callsign))
             }
         }
     }
-    return("Reached EOF,Callsign,Not_found,Update,database");
     ip.close();
+    return("Reached EOF,Callsign,Not_found,Update,database");
 }
 
 // read file until new line
@@ -70,9 +70,9 @@ int find_new_text(ifstream &infile) {
 
     infile.seekg(0,ios::end);
     int filesize = infile.tellg();
-    size_t pos;
-    float cputemp;
-    string line, cline;
+    float cputemp, BER;
+    int loss;
+    string line, cline, pktl, ber, netpl, netber;
     string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
     string strWords[17]; // [2] = ID, [11] = callsign, [14] = TG
     string trimtime, trimname;
@@ -100,15 +100,48 @@ int find_new_text(ifstream &infile) {
 
         infile.seekg( last_position-48,ios::beg);
         getline(infile, line);
-        if( line.find("RSSI") != string::npos) {
-            cout << "\t Duration " << line << "\n";
-        } else {
-            infile.seekg( last_position-41,ios::beg);
-            getline(infile, line);
-            if( line.find("BER") != string::npos) {
-            cout << "\t Duration " << line << "\n";
+        if( line.find("BER") != string::npos) {
+            for(unsigned int i=0; i<line.length(); i++) {
+                if(line[i] == ' ') {
+                    counter++;
+                } else {
+                    strWords[counter] += line[i];
+                }
             }
+
+            if( strWords[5] == "RSSI:" ) {
+                netber=strWords[4];
+                netpl="0%"; 
+            } else {
+                netber=strWords[7];
+                netpl=strWords[3];
+            }
+            
+            // Set color for packet loss
+            std::string pktl = netpl.substr(0, netpl.find("%"));
+            stringstream pl(pktl);
+            pl >> loss;
+            if (loss < 2) DIVCOLOR=TXTCOLOR;
+            if (loss >= 2) DIVCOLOR="YELLOW";
+            if (loss > 3) DIVCOLOR="RED";
+            cout << "\t Duration " << strWords[1] << " seconds, ";
+            cout << colors[DIVCOLOR] << netpl << " packet loss, ";
+
+            // Set color for BER
+            std::string ber = netber.substr(0, netber.find("%"));
+            stringstream lb(ber);
+            lb >> BER;
+            if (BER < 2) DIVCOLOR=TXTCOLOR;
+            if (BER >= 2) DIVCOLOR="YELLOW";
+            if (BER > 4.9) DIVCOLOR="RED";
+            cout << colors[DIVCOLOR] << "BER: " << netber << "\n";
         }
+   
+        // clear array and counter
+        for(int i = 0; i <= counter; i++) {
+            strWords[i].clear();
+        }
+        counter=0;
 
         // get only lines that contain the word "header"
 
@@ -116,7 +149,7 @@ int find_new_text(ifstream &infile) {
         getline(infile, line);
         last_position = infile.tellg();
         if( line.find("header") != string::npos) {
-            for(short i=0; i<line.length(); i++) {
+            for(unsigned int i=0; i<line.length(); i++) {
                 if(line[i] == ' ') {
                     counter++;
                 } else {
@@ -192,9 +225,15 @@ int find_new_text(ifstream &infile) {
 
             // print out the database info after callsign and name banner
 
-            cout << trimtime << " " << call << "," << trimname << "," << city << "," << state << "," << country << " TG" << strWords[14] << endl;
+            cout << trimtime << " " << call << "," << trimname << ",";
+            cout << city << "," << state << "," << country << " TG";
+            cout << strWords[14] << endl;
+
+            // clear array and counter
+            for(int i = 0; i <= counter; i++) {
+                strWords[i].clear();
+            }
             counter=0;
-            strWords[11].clear();
         }
 
         // end of file
@@ -223,7 +262,7 @@ int main(int argc, char *argv[]) {
     }
     std::string cfgline;
     DEFCOLOR="WHITE";
-    TXTCOLOR="BLUE";
+    TXTCOLOR="WHITE";
     while( std::getline(cfgin, cfgline)) {
         std::stringstream stream(cfgline);
         if( cfgline.find("DEFCOLOR") != string::npos) {
