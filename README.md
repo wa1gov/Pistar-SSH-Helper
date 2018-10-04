@@ -32,7 +32,7 @@ to the Pistar hotspot.
 
 Download the tar archive from GitHub:
     
-    wget -O psh-install.tgz https://github.com/wa1gov/Pistar-SSH-Helper/raw/master/psh-install.tgz
+    wget -O psh-install.tgz https://github.com/wa1gov/Pistar-SSH-Helper/raw/feature/psh-install.tgz
 
 Extract the contents of the tar archive:
 
@@ -45,7 +45,8 @@ Run this script as follows:
 ----------------------------------------------------------------
 OPERATION and OPTIONS
 
-The showlh.cfg offers the option to choose a color for the callsign display:
+The showlh.cfg offers the option to choose a color for the callsign
+(DEFCOLOR) and the text (TXTCOLOR) display:
 
 BLACK
 BBLACK
@@ -53,9 +54,19 @@ RED=DEFCOLOR
 BRED
 GREEN
 BGREEN
+WHITE=TXTCOLOR
+BWHITE
 
-Choose the color by editing the file and appending "=DEFCOLOR" to the 
-color of choice as in the example above.
+Choose the color by editing the file and appending "=DEFCOLOR" 
+or "=TXTCOLOR" to the color of choice as in the example above.
+
+The the program will display the CPU temperature on the divider
+line (see example3.jpg). The divider line color will change based
+on the CPU temperature as follows:
+
+GREEN < 50 degrees C.
+YELLOW >= 50 degrees C.
+RED >= 69 degrees C.
 
 Run slh to start the program
 

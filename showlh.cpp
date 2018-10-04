@@ -1,8 +1,8 @@
 /* 
- *  file    showlh.cpp, slh.cpp
+ *  file    slh.cpp
  *  author  WA1GOV
  *  date    9/15/2018  
- *  version 1.1.1 
+ *  version 1.1.3 
  *  
  *  Pi-star ssh helper callsign lookup and display
  *
@@ -17,17 +17,25 @@
  *
  */
 
+// Use "c++ -std=c++0x slh.cpp" or
+//     "g++ -std=c++0x slh.cpp" to compile
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <unistd.h>
 #include <algorithm>
+#include <map>
+#include <iomanip>
 #include "showlh.h"
 
 using namespace std;
+
 int firstrun=0;
 static int last_position=0;
-std::string DEFCOLOR;
+string DEFCOLOR;
+string TXTCOLOR;
+string DIVCOLOR;
 
 std::string(get_callsign(const std::string& callsign))
 {
@@ -51,8 +59,8 @@ std::string(get_callsign(const std::string& callsign))
             }
         }
     }
-    return("Reached EOF,Callsign,Not_found,Update,database");
     ip.close();
+    return("Reached EOF,Callsign,Not_found,Update,database");
 }
 
 // read file until new line
@@ -62,9 +70,9 @@ int find_new_text(ifstream &infile) {
 
     infile.seekg(0,ios::end);
     int filesize = infile.tellg();
-    size_t pos;
-    string line;
-    string cline;
+    float cputemp, BER;
+    int loss;
+    string line, cline, pktl, ber, netpl, netber;
     string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
     string strWords[17]; // [2] = ID, [11] = callsign, [14] = TG
     string trimtime, trimname;
@@ -77,7 +85,7 @@ int find_new_text(ifstream &infile) {
         last_position=0;
     }
 
-    // only do this the first time through the file
+    // only do this the first time through
 
     if( firstrun == 0 ) {
         last_position=filesize;
@@ -92,15 +100,48 @@ int find_new_text(ifstream &infile) {
 
         infile.seekg( last_position-48,ios::beg);
         getline(infile, line);
-        if( line.find("RSSI") != string::npos) {
-            cout << "\t Duration " << line;
-        } else {
-            infile.seekg( last_position-41,ios::beg);
-            getline(infile, line);
-            if( line.find("BER") != string::npos) {
-            cout << "\t Duration " << line;
+        if( line.find("BER") != string::npos) {
+            for(unsigned int i=0; i<line.length(); i++) {
+                if(line[i] == ' ') {
+                    counter++;
+                } else {
+                    strWords[counter] += line[i];
+                }
             }
+
+            if( strWords[5] == "RSSI:" ) {
+                netber=strWords[4];
+                netpl="0%"; 
+            } else {
+                netber=strWords[7];
+                netpl=strWords[3];
+            }
+            
+            // Set color for packet loss
+            std::string pktl = netpl.substr(0, netpl.find("%"));
+            stringstream pl(pktl);
+            pl >> loss;
+            if (loss < 2) DIVCOLOR=TXTCOLOR;
+            if (loss >= 2) DIVCOLOR="YELLOW";
+            if (loss > 3) DIVCOLOR="RED";
+            cout << "\t Duration " << strWords[1] << " seconds, ";
+            cout << colors[DIVCOLOR] << netpl << " packet loss, ";
+
+            // Set color for BER
+            std::string ber = netber.substr(0, netber.find("%"));
+            stringstream lb(ber);
+            lb >> BER;
+            if (BER < 2) DIVCOLOR=TXTCOLOR;
+            if (BER >= 2) DIVCOLOR="YELLOW";
+            if (BER > 4.9) DIVCOLOR="RED";
+            cout << colors[DIVCOLOR] << "BER: " << netber << "\n";
         }
+   
+        // clear array and counter
+        for(int i = 0; i <= counter; i++) {
+            strWords[i].clear();
+        }
+        counter=0;
 
         // get only lines that contain the word "header"
 
@@ -108,7 +149,7 @@ int find_new_text(ifstream &infile) {
         getline(infile, line);
         last_position = infile.tellg();
         if( line.find("header") != string::npos) {
-            for(short i=0; i<line.length(); i++) {
+            for(unsigned int i=0; i<line.length(); i++) {
                 if(line[i] == ' ') {
                     counter++;
                 } else {
@@ -123,35 +164,24 @@ int find_new_text(ifstream &infile) {
             // Get the line in the database for this callsign
 
             std::string cline = get_callsign(strWords[11]);
+      
+            // Display the divider line with CPU Temp
+
+            std::ifstream tempin("/sys/class/thermal/thermal_zone0/temp");
+            tempin >> cputemp;
+            if (cputemp/1000 < 50) DIVCOLOR="GREEN";
+            if (cputemp/1000 >= 50) DIVCOLOR="YELLOW";
+            if (cputemp/1000 >= 69) DIVCOLOR="RED";
+
+            cout << colors[DIVCOLOR] << "═══════════════════════ CPU Temp: ";
+            cout << std::fixed << std::setprecision(1) << cputemp/1000 << "C/" << cputemp/1000*1.8+32;
+            cout << "F ════════════════════════" << RESET;
 
             // Use figlet to banner the callsign
             
             // Set callsign color
-           
-            if( DEFCOLOR == "RED") {
-                cout << RED << "\n";
-            }
-            if( DEFCOLOR == "Bright_RED") {
-                cout << BRED << "\n";
-            }
-            if( DEFCOLOR == "BLUE") {
-                cout << BLUE << "\n";
-            }
-            if( DEFCOLOR == "Bright_BLUE") {
-                cout << BBLUE << "\n";
-            }
-            if( DEFCOLOR == "GREEN") {
-                cout << GREEN << "\n";
-            }
-            if( DEFCOLOR == "Bright_GREEN") {
-                cout << BGREEN << "\n";
-            }
-            if( DEFCOLOR == "WHITE") {
-                cout << WHITE << "\n";
-            }
-            if( DEFCOLOR == "Bright_WHITE") {
-                cout << BWHITE << "\n";
-            }
+
+            cout << colors[DEFCOLOR] << "\n";
 
             std::string cmd1 = "figlet -f mono12 ";
             std::string cmd2 = strWords[11];
@@ -159,7 +189,7 @@ int find_new_text(ifstream &infile) {
 
             system( cmd3.c_str() );
 
-            cout << RESET << "\n"; // reset color 
+            cout << colors[TXTCOLOR] << "\n"; // text color 
 
             // Parse the database line
 
@@ -195,9 +225,15 @@ int find_new_text(ifstream &infile) {
 
             // print out the database info after callsign and name banner
 
-            cout << trimtime << " " << call << "," << trimname << "," << city << "," << state << "," << country << " TG" << strWords[14] << endl;
+            cout << trimtime << " " << call << "," << trimname << ",";
+            cout << city << "," << state << "," << country << " TG";
+            cout << strWords[14] << endl;
+
+            // clear array and counter
+            for(int i = 0; i <= counter; i++) {
+                strWords[i].clear();
+            }
             counter=0;
-            strWords[11].clear();
         }
 
         // end of file
@@ -217,7 +253,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     if (std::string(argv[1]) == "-v") {
-        std::cout << argv[0] << " version 1.1.1\n";
+        std::cout << argv[0] << " version 1.1.3\n";
         return 0;
     }
     std::ifstream cfgin("showlh.cfg");
@@ -226,11 +262,16 @@ int main(int argc, char *argv[]) {
     }
     std::string cfgline;
     DEFCOLOR="WHITE";
+    TXTCOLOR="WHITE";
     while( std::getline(cfgin, cfgline)) {
         std::stringstream stream(cfgline);
         if( cfgline.find("DEFCOLOR") != string::npos) {
             std::stringstream stream(cfgline);
             getline(stream, DEFCOLOR, '=');
+        }
+        if( cfgline.find("TXTCOLOR") != string::npos) {
+            std::stringstream stream(cfgline);
+            getline(stream, TXTCOLOR, '=');
         }
     }
     cfgin.close();
