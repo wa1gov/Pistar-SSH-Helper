@@ -32,7 +32,7 @@ to the Pistar hotspot.
 
 Download the tar archive from GitHub:
     
-    wget -O psh-install.tgz https://github.com/wa1gov/Pistar-SSH-Helper/raw/feature/psh-install.tgz
+    wget -O psh-install.tgz https://github.com/wa1gov/Pistar-SSH-Helper/raw/master/psh-install.tgz
 
 Extract the contents of the tar archive:
 
