@@ -133,7 +133,7 @@ int find_new_text(ifstream &infile) {
             lb >> BER;
             if (BER < 2) DIVCOLOR=TXTCOLOR;
             if (BER >= 2) DIVCOLOR="YELLOW";
-            if (BER > 4.9) DIVCOLOR="RED";
+            if (BER >= 5.0) DIVCOLOR="RED";
             cout << colors[DIVCOLOR] << "BER: " << netber << "\n";
         }
    
