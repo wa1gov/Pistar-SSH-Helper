@@ -28,11 +28,11 @@ Extract the contents of the tar archive:
 
     tar xvf psh-install.tgz
 
-psh-install.sh
-README.md
-showlh
-showlh.cfg
-slh
+psh-install.sh  
+README.md  
+showlh  
+showlh.cfg  
+slh  
 
 Run this script as follows:
 
@@ -57,15 +57,15 @@ Extract the contents of the tar archive:
 
     tar xvf Pistar-SSH-Helper.tgz
 
-example.jpg
-example2.jpg
-example3.jpg
-psh-install.sh
-README.md
-makefile
-showlh.cfg
-showlh.h
-showlh.cpp
+example.jpg  
+example2.jpg  
+example3.jpg  
+psh-install.sh  
+README.md  
+makefile  
+showlh.cfg  
+showlh.h  
+showlh.cpp  
 
 Run make clean:
 
@@ -85,14 +85,14 @@ OPERATION and OPTIONS
 The showlh.cfg offers the option to choose a color for the callsign
 (DEFCOLOR) and the text (TXTCOLOR) display:
 
- BLACK
- BBLACK
- RED=DEFCOLOR
- BRED
- GREEN
- BGREEN
- WHITE=TXTCOLOR
- BWHITE
+ BLACK  
+ BBLACK  
+ RED=DEFCOLOR  
+ BRED  
+ GREEN  
+ BGREEN  
+ WHITE=TXTCOLOR  
+ BWHITE  
 
 Choose the color by editing the file and appending "=DEFCOLOR" 
 or "=TXTCOLOR" to the color of choice as in the example above.
@@ -101,9 +101,9 @@ The the program will display the CPU temperature on the divider
 line (see example3.jpg). The divider line color will change based
 on the CPU temperature as follows:
 
-GREEN < 50 degrees C.
-YELLOW >= 50 degrees C.
-RED >= 69 degrees C.
+GREEN < 50 degrees C.  
+YELLOW >= 50 degrees C.  
+RED >= 69 degrees C.  
 
 Run slh to start the program
 
