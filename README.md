@@ -55,7 +55,7 @@ Download the tar archive from GitHub:
 
 Extract the contents of the tar archive:
 
-    tar xvf psh-install.tgz
+    tar xvf Pistar-SSH-Helper.tgz
 
 example.jpg
 example2.jpg
