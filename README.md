@@ -116,7 +116,7 @@ Run showlh -v to get the program version.
     ./showlh -v
     ./showlh version 1.1.0
 
-You can run showlh <logfile name>
+You can run showlh logfile_name  
 to specify a different logfile from the default.
 
 Run the install script at any time to update the DMR ID database files.
