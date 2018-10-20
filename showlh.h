@@ -16,6 +16,15 @@ static std::map<std::string, std::string> colors = {
     { "CYAN", "\x1b[36m" },
     { "BCYAN", "\x1b[96m" },
     { "WHITE", "\x1b[37m" },
-    { "BWHITE", "\x1b[97m" }
+    { "BWHITE", "\x1b[97m" },
+    { "OnBlack", "\x1b[40m" },
+    { "OnRed", "\x1b[41m" },
+    { "OnGreen", "\x1b[42m" },
+    { "OnYellow", "\x1b[43m" },
+    { "OnBlue", "\x1b[44m" },
+    { "OnPurple", "\x1b[45m" },
+    { "OnCyan", "\x1b[46m" },
+    { "OnWhite", "\x1b[47m" }, 
+    { "OnAmber", "\x1b[38;5;16;48;5;172m" } 
 };
 static const std::string RESET="\x1b[0m";
