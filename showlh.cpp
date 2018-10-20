@@ -122,19 +122,19 @@ int find_new_text(ifstream &infile) {
             stringstream pl(pktl);
             pl >> loss;
             if (loss < 2) DIVCOLOR=TXTCOLOR;
-            if (loss >= 2) DIVCOLOR="YELLOW";
-            if (loss > 3) DIVCOLOR="RED";
-            cout << "\t Duration " << strWords[1] << " seconds, ";
-            cout << colors[DIVCOLOR] << netpl << " packet loss, ";
+            if (loss >= 2) DIVCOLOR="OnAmber";
+            if (loss > 3) DIVCOLOR="OnRed";
+            cout << colors[TXTCOLOR] << "\t Duration " << strWords[1] << " seconds, ";
+            cout << colors[DIVCOLOR] << netpl << RESET << colors[TXTCOLOR] << " packet loss, ";
 
             // Set color for BER
             std::string ber = netber.substr(0, netber.find("%"));
             stringstream lb(ber);
             lb >> BER;
             if (BER < 2) DIVCOLOR=TXTCOLOR;
-            if (BER >= 2) DIVCOLOR="YELLOW";
-            if (BER >= 5.0) DIVCOLOR="RED";
-            cout << colors[DIVCOLOR] << "BER: " << netber << "\n";
+            if (BER >= 2) DIVCOLOR="OnAmber";
+            if (BER >= 5.0) DIVCOLOR="OnRed";
+            cout << "BER: " << colors[DIVCOLOR] << netber << RESET << colors[TXTCOLOR] << "\n";
         }
    
         // clear array and counter
@@ -275,7 +275,7 @@ int main(int argc, char *argv[]) {
         }
     }
     cfgin.close();
-    std::cout << "***** Gateway Activity from " << argv[1] << " *****\n";
+    std::cout << colors[TXTCOLOR] << "***** Gateway Activity from " << argv[1] << " *****\n";
     for(;;) {
         std::ifstream infile(argv[1]);
         int current_position = find_new_text(infile);
