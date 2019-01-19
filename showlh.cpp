@@ -2,7 +2,7 @@
  *  file    slh.cpp
  *  author  WA1GOV
  *  date    9/15/2018  
- *  version 1.1.3 
+ *  version 1.1.4 
  *  
  *  Pi-star ssh helper callsign lookup and display
  *
@@ -100,7 +100,7 @@ int find_new_text(ifstream &infile) {
 
         infile.seekg( last_position-48,ios::beg);
         getline(infile, line);
-        if( line.find("BER") != string::npos) {
+        if( line.find("BER:") != string::npos) {
             for(unsigned int i=0; i<line.length(); i++) {
                 if(line[i] == ' ') {
                     counter++;
@@ -253,7 +253,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     if (std::string(argv[1]) == "-v") {
-        std::cout << argv[0] << " version 1.1.3\n";
+        std::cout << argv[0] << " version 1.1.4\n";
         return 0;
     }
     std::ifstream cfgin("showlh.cfg");
