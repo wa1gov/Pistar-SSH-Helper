@@ -11,7 +11,8 @@ echo "Running rpi-rw"
 sudo mount -o remount,rw / ; sudo mount -o remount,rw /boot
 
 echo "Downloading DMR ID database..."
-wget -q -O usr.bin http://www.amateurradio.digital/pi-star_data.php
+#wget -q -O usr.bin http://www.amateurradio.digital/pi-star_data.php
+wget -q -O usr.bin https://www.radioid.net/static/users.csv
 echo "Done downloading DMR ID database!"
 
 echo "Installing/upgrading figlet..."

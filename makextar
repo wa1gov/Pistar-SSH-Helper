@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tar cvf psh-install.tgz psh-install.sh README.md showlh showlh.cfg slh
