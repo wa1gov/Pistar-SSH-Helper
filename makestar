@@ -1,3 +1,0 @@
-#!/bin/bash
-
-tar cvf Pistar-SSH-Helper.tgz example.jpg example2.jpg example3.jpg psh-install.sh README.md makefile showlh.cfg showlh.h showlh.cpp
