@@ -217,10 +217,12 @@ int find_new_text(ifstream &infile) {
 
                 // Use figlet to banner the first name
 
+                if ( tname != "" ) {
                 std::string cmd4 = "figlet -f mono9 ";
                 std::string cmd5 = tname;
                 std::string cmd6 = cmd4+cmd5;
                 system( cmd6.c_str() );
+                }
             }
 
             // print out the database info after callsign and name banner
