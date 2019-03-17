@@ -12,7 +12,8 @@ sudo mount -o remount,rw / ; sudo mount -o remount,rw /boot
 
 echo "Downloading DMR ID database..."
 #wget -q -O usr.bin http://www.amateurradio.digital/pi-star_data.php
-wget -q -O usr.bin https://www.radioid.net/static/users.csv
+#wget -q -O usr.bin https://www.radioid.net/static/users.csv
+wget --timeout=120 --no-check-certificate --wait=3 'https://ham-digital.org/status/users.csv' -O usr.bin
 echo "Done downloading DMR ID database!"
 
 echo "Installing/upgrading figlet..."
