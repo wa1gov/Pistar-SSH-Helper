@@ -11,8 +11,7 @@ echo "Running rpi-rw"
 sudo mount -o remount,rw / ; sudo mount -o remount,rw /boot
 
 echo "Downloading DMR ID database..."
-wget --timeout=120 --no-check-certificate --wait=3 'https://www.radioid.net/static/user.csv' -O usr_raw.bin
-awk -F, '{print $1","$2","$3","$5","$6","$7}' usr_raw.bin > usr.bin
+wget --timeout=120 --no-check-certificate --wait=3 'https://raw.githubusercontent.com/BM-Database/database-beta/master/usr.bin' -O usr.bin
 echo "Done downloading DMR ID database!"
 
 echo "Installing/upgrading figlet..."
