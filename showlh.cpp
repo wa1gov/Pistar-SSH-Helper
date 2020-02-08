@@ -143,12 +143,12 @@ int find_new_text(ifstream &infile) {
         }
         counter=0;
 
-        // get only lines that contain the word "header"
+        // get only lines that contain the word "from"
 
         infile.seekg( last_position,ios::beg);
         getline(infile, line);
         last_position = infile.tellg();
-        if( line.find("header") != string::npos) {
+        if( line.find("from") != string::npos) {
             for(unsigned int i=0; i<line.length(); i++) {
                 if(line[i] == ' ') {
                     counter++;
