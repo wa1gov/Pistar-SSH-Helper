@@ -126,10 +126,17 @@ Run the install script at any time to update the DMR ID database files.
 ----------------------------------------------------------------
 DISCLAIMER and CAVEATS
 
-This program has only been tested with a Jumbospot MMDVM on RPI Zero.
+1. This program has only been tested with a Jumbospot MMDVM on RPI Zero.
 Other hotspots may exhibit different results or errors.
 
-For MMDVM hotspots, the default logfile is located in 
+2. No tests have been done using the beta Pi-Star_RPi_V4.1.0-RC6_19-Dec-2019 
+image.
+
+3. It is recommended that the option: "DMR DumpTAData" be turned off - The 
+default is on which allows Talker Alias data to be logged in the pi-star log 
+file. If left on you may get erroneous "Not Found" errors.
+
+4. For MMDVM hotspots, the default logfile is located in 
 /var/log/pi-star and is named by convention:
 
     MMDVM-year-month-day.log
