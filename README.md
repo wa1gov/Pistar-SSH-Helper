@@ -138,9 +138,7 @@ file. If left on you may get erroneous "Not Found" errors.
 
 4. For MMDVM hotspots, the default logfile is located in 
 /var/log/pi-star and is named by convention:
-
     MMDVM-year-month-day.log
-
 A new logfile is created for the next day automatically via Pistar
 at 2400 UTC. The program may appear to hang at 2400 UTC when the new
 logfile is created. If this occurs, stop and restart the program.
