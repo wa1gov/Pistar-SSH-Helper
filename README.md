@@ -132,11 +132,7 @@ Other hotspots may exhibit different results or errors.
 2. No tests have been done using the beta Pi-Star_RPi_V4.1.0-RC6_19-Dec-2019 
 image.
 
-3. It is recommended that the options: "DMR EmbeddedLCOnly" be turned on and
- "DMR DumpTAData" be turned off in your Pi-Star configuration to eliminate
-any erroneous "Not Found" errors.
-
-4. For MMDVM hotspots, the default logfile is located in 
+3. For MMDVM hotspots, the default logfile is located in 
 /var/log/pi-star and is named by convention:
     MMDVM-year-month-day.log
 A new logfile is created for the next day automatically via Pistar

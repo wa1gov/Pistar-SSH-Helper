@@ -143,12 +143,13 @@ int find_new_text(ifstream &infile) {
         }
         counter=0;
 
-        // get only lines that contain the word "from"
+        // get only lines that contain the word "network" and "from"
 
         infile.seekg( last_position,ios::beg);
         getline(infile, line);
         last_position = infile.tellg();
-        if( line.find("from") != string::npos) {
+        if( line.find("network") != string::npos) {
+          if( line.find("from") != string::npos) {
             for(unsigned int i=0; i<line.length(); i++) {
                 if(line[i] == ' ') {
                     counter++;
@@ -236,6 +237,7 @@ int find_new_text(ifstream &infile) {
                 strWords[i].clear();
             }
             counter=0;
+          }
         }
 
         // end of file
