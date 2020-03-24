@@ -129,8 +129,8 @@ DISCLAIMER and CAVEATS
 1. This program has only been tested with a Jumbospot MMDVM on RPI Zero.
 Other hotspots may exhibit different results or errors.
 
-2. No tests have been done using the beta Pi-Star_RPi_V4.1.0-RC6_19-Dec-2019 
-image.
+2. There is now support for Pi-Star 4.1 starting with Pistar-SSH-Helper 1.2.1.
+Limited tests have been done using the beta version Pi-Star 4.1.0 RC8.
 
 3. For MMDVM hotspots, the default logfile is located in 
 /var/log/pi-star and is named by convention:

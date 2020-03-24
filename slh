@@ -1,4 +1,4 @@
 #!/bin/bash
-
+VER=`grep Version /etc/pistar-release | awk '{print $3}' | awk -F. '{print $1}'`
 LOG=`ls -tr /var/log/pi-star/MMDVM* | tail -1`
-./showlh $LOG
+./showlh $LOG $VER

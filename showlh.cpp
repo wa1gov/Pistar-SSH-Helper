@@ -1,8 +1,8 @@
 /* 
- *  file    slh.cpp
+ *  file    showlh.cpp
  *  author  WA1GOV
  *  date    9/15/2018  
- *  version 1.1.6 
+ *  version 1.2.1 
  *  
  *  Pi-star ssh helper callsign lookup and display
  *
@@ -30,7 +30,7 @@
 #include "showlh.h"
 
 using namespace std;
-
+int pistar = 3;
 int firstrun=0;
 static int last_position=0;
 string DEFCOLOR;
@@ -72,9 +72,9 @@ int find_new_text(ifstream &infile) {
     int filesize = infile.tellg();
     float cputemp, BER;
     int loss, found;
-    string line, cline, pktl, ber, netpl, netber;
+    string line, cline, pktl, ber, netpl, netber, netdur, netTG;
     string cmd1, cmd2, cmd3, cmd4, cmd5, cmd6;
-    string strWords[17]; // [2] = ID, [11] = callsign, [14] = TG
+    string strWords[30];
     string trimtime, trimname;
     string dmrid, call, name, city, state, country;
     short counter = 0;
@@ -98,7 +98,8 @@ int find_new_text(ifstream &infile) {
 
         // get the packet loss and BER for the last station
 
-        infile.seekg( last_position-48,ios::beg);
+        infile.seekg( last_position-170,ios::beg); 
+        getline(infile, line);
         getline(infile, line);
         if( line.find("BER:") != string::npos) {
             for(unsigned int i=0; i<line.length(); i++) {
@@ -108,13 +109,27 @@ int find_new_text(ifstream &infile) {
                     strWords[counter] += line[i];
                 }
             }
-
-            if( strWords[5] == "RSSI:" ) {
-                netber=strWords[4];
-                netpl="0%"; 
-            } else {
-                netber=strWords[7];
-                netpl=strWords[3];
+            if ( pistar == 3 ) { 
+                if( strWords[16] == "RSSI:" ) {
+                netber=strWords[15];
+                netpl="0%";
+                netdur=strWords[12];
+                } else {
+                netber=strWords[18];
+                netpl=strWords[14];
+                netdur=strWords[12];
+                }
+            }
+            if ( pistar == 4 ) { 
+                if( strWords[21] == "RSSI:" ) {
+                netber=strWords[20];
+                netpl="0%";
+                netdur=strWords[17];
+                } else {
+                netber=strWords[23];
+                netpl=strWords[19];
+                netdur=strWords[17];
+                }
             }
             
             // Set color for packet loss
@@ -124,7 +139,7 @@ int find_new_text(ifstream &infile) {
             if (loss < 2) DIVCOLOR=TXTCOLOR;
             if (loss >= 2) DIVCOLOR="OnAmber";
             if (loss > 3) DIVCOLOR="OnRed";
-            cout << colors[TXTCOLOR] << "\t Duration " << strWords[1] << " seconds, ";
+            cout << colors[TXTCOLOR] << "\t Duration " << netdur << " seconds, ";
             cout << colors[DIVCOLOR] << netpl << RESET << colors[TXTCOLOR] << " packet loss, ";
 
             // Set color for BER
@@ -157,6 +172,9 @@ int find_new_text(ifstream &infile) {
         if( line.find("CSBK") != string::npos) {
           found = 0;
         }
+        if( line.find("transmissio") != string::npos) {
+          found = 0;
+        }
         if( found == 1 ) {
           found = 0;
           if( line.find("from") != string::npos) {
@@ -167,6 +185,9 @@ int find_new_text(ifstream &infile) {
                     strWords[counter] += line[i];
                 }
             }
+
+            // Talkgroup 
+                netTG=strWords[14];
 
             // Trim the 10th of seconds off of the time string
 
@@ -239,8 +260,8 @@ int find_new_text(ifstream &infile) {
             // print out the database info after callsign and name banner
 
             cout << trimtime << " " << call << "," << trimname << ",";
-            cout << city << "," << state << "," << country << " TG";
-            cout << strWords[14] << endl;
+            cout << city << "," << state << "," << country << " TG-";
+            cout << netTG << endl;
 
             // clear array and counter
             for(int i = 0; i <= counter; i++) {
@@ -260,15 +281,19 @@ int find_new_text(ifstream &infile) {
     return 0;
 }
 
-
 int main(int argc, char *argv[]) {
     if (argc < 2) { // infile name
         std::cerr << "Usage: " << argv[0] << " <Log file name>" << std::endl;
         return 1;
     }
     if (std::string(argv[1]) == "-v") {
-        std::cout << argv[0] << " version 1.1.6\n";
+        std::cout << argv[0] << " version 1.2.1\n";
         return 0;
+    }
+    if (argc == 3) { 
+        if (std::string(argv[2]) == "4") {
+            pistar=4;
+        }
     }
     std::ifstream cfgin("showlh.cfg");
     if(!cfgin.is_open()) {
