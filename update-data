@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Utility to download the latest DMR database.
+# Optional: Use the -c option to sync the Pistar database with
+#   the DMR database. If you use the -c option, you must stop/start
+#   Pistar services or reboot the hotspot to update the Pistar DB. 
+#
+# Usage: ./update-data [ -c ]
+#
+
+sudo mount -o remount,rw / ; sudo mount -o remount,rw /boot
+cd ~
+DMRIDFILE="/usr/local/etc/DMRIds.dat"
+echo "Downloading DMR database..."
+wget --timeout=120 --no-check-certificate --wait=3 'https://www.radioid.net/static/user.csv' -O usr_raw.bin
+sudo curl --fail -o ${DMRIDFILE} http://www.pistar.uk/downloads/DMRIds.dat
+echo "Converting usr_raw.bin to usr.bin"
+mv usr.bin usr.sav
+mv DMRids.dat DMRids.sav
+awk -F, '{print $1","$2","$3","$5","$6","$7}' usr_raw.bin > usr.bin
+echo "Converting usr.bin to DMRids.dat"
+awk -F, '{print $1" "$2" "$3}' usr.bin | awk  '{print $1"\t"$2"\t"$3}' | sed 's/"//' > DMRids.dat
+if [ "$1" = "-c" ]
+then
+    echo "Copying DMRids.dat to DMRIds.dat"
+    sudo cp DMRids.dat DMRIds.dat
+fi
+echo "--------------------------------------------------"
+ls -l ${DMRIDFILE}
+wc -l ${DMRIDFILE} DMRids.dat
+echo "--------------------------------------------------"
+ls -l usr.bin
+wc -l usr.bin usr_raw.bin
