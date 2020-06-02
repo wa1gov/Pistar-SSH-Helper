@@ -12,7 +12,7 @@ sudo mount -o remount,rw / ; sudo mount -o remount,rw /boot
 cd ~
 DMRIDFILE="/usr/local/etc/DMRIds.dat"
 echo "Downloading DMR database..."
-wget --timeout=120 --no-check-certificate --wait=3 'https://www.radioid.net/static/user.csv' -O usr_raw.bin
+wget --timeout=120 --no-check-certificate --wait=3 'https://database.radioid.net/static/user.csv' -O usr_raw.bin
 sudo curl --fail -o ${DMRIDFILE} http://www.pistar.uk/downloads/DMRIds.dat
 echo "Converting usr_raw.bin to usr.bin"
 mv usr.bin usr.sav
