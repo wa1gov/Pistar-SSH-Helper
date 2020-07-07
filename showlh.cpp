@@ -2,7 +2,7 @@
  *  file    showlh.cpp
  *  author  WA1GOV
  *  date    9/15/2018  
- *  version 1.2.1 
+ *  version 1.2.2 
  *  
  *  Pi-star ssh helper callsign lookup and display
  *
@@ -101,7 +101,7 @@ int find_new_text(ifstream &infile) {
         infile.seekg( last_position-170,ios::beg); 
         getline(infile, line);
         getline(infile, line);
-        if( line.find("BER:") != string::npos) {
+        if(( line.find("BER:") != string::npos) && ( line.find("DMR") != string::npos)) {
             for(unsigned int i=0; i<line.length(); i++) {
                 if(line[i] == ' ') {
                     counter++;
@@ -177,7 +177,7 @@ int find_new_text(ifstream &infile) {
         }
         if( found == 1 ) {
           found = 0;
-          if( line.find("from") != string::npos) {
+          if(( line.find("DMR") != string::npos) && ( line.find("from") != string::npos)) {
             for(unsigned int i=0; i<line.length(); i++) {
                 if(line[i] == ' ') {
                     counter++;
@@ -287,7 +287,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     if (std::string(argv[1]) == "-v") {
-        std::cout << argv[0] << " version 1.2.1\n";
+        std::cout << argv[0] << " version 1.2.2\n";
         return 0;
     }
     if (argc == 3) { 
