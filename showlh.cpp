@@ -2,7 +2,7 @@
  *  file    showlh.cpp
  *  author  WA1GOV
  *  date    9/15/2018  
- *  version 1.2.2 
+ *  version 1.2.4 
  *  
  *  Pi-star ssh helper callsign lookup and display
  *
@@ -96,11 +96,12 @@ int find_new_text(ifstream &infile) {
 
     for(int n=last_position; n<filesize; n++) {
 
-        // get the packet loss and BER for the last station
+        infile.seekg( last_position,ios::beg);
+        getline(infile, line);
+        last_position = infile.tellg();
 
-        infile.seekg( last_position-170,ios::beg); 
-        getline(infile, line);
-        getline(infile, line);
+        // get the packet loss and BER 
+
         if(( line.find("BER:") != string::npos) && ( line.find("DMR") != string::npos)) {
             for(unsigned int i=0; i<line.length(); i++) {
                 if(line[i] == ' ') {
@@ -139,7 +140,7 @@ int find_new_text(ifstream &infile) {
             if (loss < 2) DIVCOLOR=TXTCOLOR;
             if (loss >= 2) DIVCOLOR="OnAmber";
             if (loss > 3) DIVCOLOR="OnRed";
-            cout << colors[TXTCOLOR] << "\t Duration " << netdur << " seconds, ";
+            cout << colors[TXTCOLOR] << "\b\b\b\b    \t Duration " << netdur << " seconds, ";
             cout << colors[DIVCOLOR] << netpl << RESET << colors[TXTCOLOR] << " packet loss, ";
 
             // Set color for BER
@@ -150,19 +151,17 @@ int find_new_text(ifstream &infile) {
             if (BER >= 2) DIVCOLOR="OnAmber";
             if (BER >= 5.0) DIVCOLOR="OnRed";
             cout << "BER: " << colors[DIVCOLOR] << netber << RESET << colors[TXTCOLOR] << "\n";
+
         }
-   
+
         // clear array and counter
         for(int i = 0; i <= counter; i++) {
             strWords[i].clear();
         }
         counter=0;
-
+   
         // get only lines that contain the words "network|RF" and "from"
 
-        infile.seekg( last_position,ios::beg);
-        getline(infile, line);
-        last_position = infile.tellg();
         if( line.find("network") != string::npos) {
           found = 1;
         }
@@ -262,6 +261,8 @@ int find_new_text(ifstream &infile) {
             cout << trimtime << " " << call << "," << trimname << ",";
             cout << city << "," << state << "," << country << " TG-";
             cout << netTG << endl;
+            DIVCOLOR="OnRed";
+            cout << colors[DIVCOLOR] << " TX " << RESET << flush;
 
             // clear array and counter
             for(int i = 0; i <= counter; i++) {
@@ -287,7 +288,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     if (std::string(argv[1]) == "-v") {
-        std::cout << argv[0] << " version 1.2.2\n";
+        std::cout << argv[0] << " version 1.2.4\n";
         return 0;
     }
     if (argc == 3) { 
