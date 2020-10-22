@@ -122,11 +122,17 @@ int find_new_text(ifstream &infile) {
                 }
             }
             if ( pistar == 4 ) { 
-                if( strWords[21] == "RSSI:" ) {
+                if( strWords[7] == "RF" ) {
                 netber=strWords[20];
                 netpl="0%";
                 netdur=strWords[17];
-                } else {
+                }
+                if( strWords[7] == "watchdog" ) {
+                netber=strWords[16];
+                netpl=strWords[12];
+                netdur=strWords[10];
+                }
+                if( strWords[7] == "network" ) {
                 netber=strWords[23];
                 netpl=strWords[19];
                 netdur=strWords[17];
