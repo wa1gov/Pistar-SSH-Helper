@@ -5,6 +5,7 @@ then
     echo "Usage: $0 <callsign,callsign,callsign,etc>"
     exit
 fi
+COLOR="${BLUE}"
 SCAN_ARRAY=(`echo "$1" | awk -F, '{for(i=1; i<=NF; i++) print $i}'`)
 LEN=${#SCAN_ARRAY[@]}
 SIZE=$(($LEN-1))
@@ -13,13 +14,16 @@ while true
 do
     for i in `seq 0 $SIZE`
     do
-        SCAN=`egrep "${SCAN_ARRAY[$i]}" /var/log/pi-star/MM* | grep TG | awk '{print $0}' | tail -1`
+        SCAN=`egrep "${SCAN_ARRAY[$i]}" /var/log/pi-star/MM* | grep header | awk '{print $0}' | tail -1`
         TIME=`echo "$SCAN" | awk '{print $3}' | awk -F: '{print $1":"$2}'`
         if [ -n "$SCAN" ] && [ "${STIM[$i]}" != "$TIME" ]
         then
             TG=`echo "$SCAN" | awk '{print $NF}'`
-            figlet -f mono12 "${SCAN_ARRAY[$i]}"
-            echo "Heard ${SCAN_ARRAY[$i]} on DMR Talk Group $TG at $TIME UTC"
+            #figlet -f mono12 "${SCAN_ARRAY[$i]}"
+            BIG=`figlet -f mono12 "${SCAN_ARRAY[$i]}"`
+            echo -e "${COLOR}$BIG"
+            #echo "Heard ${SCAN_ARRAY[$i]} on DMR Talk Group $TG at $TIME UTC"
+            echo -e "${COLOR}Heard ${SCAN_ARRAY[$i]} on DMR Talk Group $TG at $TIME UTC"
             if [ "$2" = "mail" ]
             then
                 ~/mailsend "Heard ${SCAN_ARRAY[$i]}" "Heard ${SCAN_ARRAY[$i]} on DMR Talk Group $TG at $TIME UTC"
@@ -31,5 +35,9 @@ do
         fi
         STIM[$i]="$TIME"
     done
+    if [ -n "$2" ]
+    then
+        exit
+    fi 
     sleep 5
 done
